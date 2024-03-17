@@ -192,6 +192,8 @@ public class PDFService {
             document.close();
             ByteArrayResource resource = new ByteArrayResource(outputStream.toByteArray());
             HttpHeaders headers = new HttpHeaders();
+            headers.add("Access-Control-Allow-Origin","*");
+            headers.add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             headers.add("Content-Disposition", "attachment; filename=invoice_itext.pdf");
             return ResponseEntity.ok()
                     .headers(headers)
