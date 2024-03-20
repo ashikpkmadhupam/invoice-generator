@@ -201,6 +201,7 @@ public class PDFService {
                     .body(resource);
 
         } catch (Exception e){
+            log.error(e.getMessage());
             throw new PDFException("Error occurred while generating PDF");
         }
     }
