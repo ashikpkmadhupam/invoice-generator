@@ -178,6 +178,34 @@ public class PDFService {
             sign.setSpacingBefore(80f);
             document.add(sign);
 
+            com.itextpdf.text.Image signature = Image.getInstance("src/main/resources/images/Sign.png");
+            signature.scaleAbsolute(100f, 25f);
+            signature.setSpacingAfter(5f);
+            signature.setAlignment(Element.ALIGN_RIGHT);
+            signature.setIndentationRight(40f);
+            document.add(signature);
+
+            Paragraph name = new Paragraph("Akhil A");
+            name.setAlignment(Element.ALIGN_RIGHT);
+            name.setIndentationRight(80f);
+            //name.setSpacingBefore(20f);
+            document.add(name);
+
+            Paragraph company_name = new Paragraph("Digital Land Survey");
+            company_name.setAlignment(Element.ALIGN_RIGHT);
+            company_name.setIndentationRight(14f);
+            document.add(company_name);
+
+            Paragraph place_name = new Paragraph("Kallikkandy");
+            place_name.setAlignment(Element.ALIGN_RIGHT);
+            place_name.setIndentationRight(57f);
+            document.add(place_name);
+
+            Paragraph cert = new Paragraph("C.No: 72/2010");
+            cert.setAlignment(Element.ALIGN_RIGHT);
+            cert.setIndentationRight(41f);
+            document.add(cert);
+
             PdfContentByte canvas = writer.getDirectContent();
             CMYKColor magentaColor = new CMYKColor(0.f, 0.f, 0.f, 1.f);
             canvas.setColorStroke(magentaColor);
