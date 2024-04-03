@@ -215,7 +215,7 @@ public class PDFService {
                     "IFSC: SIBL0000449\n" +
                     "Account Name: AKHIL A\n" +
                     "Branch Name : KOOTHUPARAMBU\n" +
-                    "Bank Name: South Indian Bank\n", PdfPCell.ALIGN_LEFT, BaseColor.BLACK));
+                    "Bank Name: South Indian Bank\nGpay: 9497287663", PdfPCell.ALIGN_LEFT, BaseColor.BLACK));
             PdfPCell qrCell = new PdfPCell(qrCodeImage);
             qrCell.setBorder(0);
             qrCell.setHorizontalAlignment(2);
