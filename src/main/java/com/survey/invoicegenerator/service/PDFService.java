@@ -19,8 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -201,16 +199,41 @@ public class PDFService {
             place_name.setIndentationRight(57f);
             document.add(place_name);
 
-            Paragraph cert = new Paragraph("C.No: 72/2010");
-            cert.setAlignment(Element.ALIGN_RIGHT);
-            cert.setIndentationRight(41f);
-            document.add(cert);
+            Paragraph payment = new Paragraph("Payment");
+            payment.setAlignment(Element.ALIGN_CENTER);
+            payment.setSpacingBefore(15f);
+            payment.setSpacingAfter(2f);
+            document.add(payment);
+
+            BarcodeQRCode qrCode = new BarcodeQRCode(generateQRString(sum,invoiceData.getInvoiceNumber()),125,125,null);
+            Image qrCodeImage = qrCode.getImage();
+            qrCodeImage.setSpacingAfter(5f);
+
+            PdfPTable payment_table = new PdfPTable(2);
+            payment_table.setWidthPercentage(100);
+            payment_table.addCell(getCell("Bank Details \n\nAccount Number: 5555053000080870\n" +
+                    "IFSC: SIBL0000449\n" +
+                    "Account Name: AKHIL A\n" +
+                    "Branch Name : KOOTHUPARAMBU\n" +
+                    "Bank Name: South Indian Bank\n", PdfPCell.ALIGN_LEFT, BaseColor.BLACK));
+            PdfPCell qrCell = new PdfPCell(qrCodeImage);
+            qrCell.setBorder(0);
+            qrCell.setHorizontalAlignment(2);
+            payment_table.addCell(qrCell);
+            document.add(payment_table);
+
+            PdfContentByte canvas1 = writer.getDirectContent();
+            CMYKColor magentaColor1 = new CMYKColor(0.f, 0.f, 0.f, 1.f);
+            canvas1.setColorStroke(magentaColor1);
+            canvas1.moveTo(30, 190);
+            canvas1.lineTo(560, 190);
+            canvas1.closePathStroke();
 
             PdfContentByte canvas = writer.getDirectContent();
             CMYKColor magentaColor = new CMYKColor(0.f, 0.f, 0.f, 1.f);
             canvas.setColorStroke(magentaColor);
-            canvas.moveTo(30, 63);
-            canvas.lineTo(560, 63);
+            canvas.moveTo(30, 52);
+            canvas.lineTo(560, 52);
             canvas.closePathStroke();
 
 
@@ -230,6 +253,11 @@ public class PDFService {
             log.error(e.getMessage());
             throw new PDFException("Error occurred while generating PDF");
         }
+    }
+
+    private String generateQRString(double sum, long invoiceNumber) {
+        String qrContent = "upi://pay?pa=a.akhil1988@oksbi&pn=Akhil&am="+sum+"&tn="+invoiceNumber+"&cu=INR";
+        return qrContent;
     }
 
     private void calculateAmount(List<TableContent> tableList) {
