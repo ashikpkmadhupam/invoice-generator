@@ -222,12 +222,12 @@ public class PDFService {
             payment_table.addCell(qrCell);
             document.add(payment_table);
 
-            PdfContentByte canvas1 = writer.getDirectContent();
+            /*PdfContentByte canvas1 = writer.getDirectContent();
             CMYKColor magentaColor1 = new CMYKColor(0.f, 0.f, 0.f, 1.f);
             canvas1.setColorStroke(magentaColor1);
             canvas1.moveTo(30, 190);
             canvas1.lineTo(560, 190);
-            canvas1.closePathStroke();
+            canvas1.closePathStroke();*/
 
             PdfContentByte canvas = writer.getDirectContent();
             CMYKColor magentaColor = new CMYKColor(0.f, 0.f, 0.f, 1.f);
